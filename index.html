@@ -20,8 +20,8 @@
     <span class="loginwith">Sign in with<br />social network</span>
     
     <button class="social-signin facebook">Log in with facebook</button>
-    <button class="social-signin twitter">Log in with Twitter</button>
-    <button class="social-signin google">Log in with Google+</button>
+    <button class="social-signin twitter">Log in with </button>
+    <button class="social-signin github" onclick="signInWithPopup(getAuth, GithubAuthProvider)">Log in with Github</button>
   </div>
   <div class="or">OR</div>
 </div>
@@ -31,13 +31,18 @@
   // Import the functions you need from the SDKs you need
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-app.js";
   import { getDatabase, set, ref, update } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-database.js";
-  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js";
+  import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, GithubAuthProvider } from "https://www.gstatic.com/firebasejs/9.4.0/firebase-auth.js";
   // TODO: Add SDKs for Firebase products that you want to use
   // https://firebase.google.com/docs/web/setup#available-libraries
 
   // Your web app's Firebase configuration
   const firebaseConfig = {
-    //yout config code
+     apiKey: "AIzaSyClRGNzMAtEDeiASC-Pm2cUJslgCFg6KE0",
+    authDomain: "harderdaddy.firebaseapp.com",
+    projectId: "harderdaddy",
+    storageBucket: "harderdaddy.appspot.com",
+    messagingSenderId: "234487497085",
+    appId: "1:234487497085:web:655ac94a2a51d05177cc14"
   };
 
   // Initialize Firebase
@@ -129,6 +134,28 @@ logout.addEventListener('click',(e)=>{
    });
 
 });
+  
+  const auth = getAuth();
+signInWithPopup(auth, provider)
+  .then((result) => {
+    // This gives you a GitHub Access Token. You can use it to access the GitHub API.
+    const credential = GithubAuthProvider.credentialFromResult(result);
+    const token = credential.accessToken;
+
+    // The signed-in user info.
+    const user = result.user;
+    // ...
+  }).catch((error) => {
+    // Handle Errors here.
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    // The email of the user's account used.
+    const email = error.email;
+    // The AuthCredential type that was used.
+    const credential = GithubAuthProvider.credentialFromError(error);
+    // ...
+  });
+
 
 </script>
 
